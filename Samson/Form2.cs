@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Samson.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Samson
 {
@@ -44,6 +47,24 @@ namespace Samson
         private void button1_Click(object sender, EventArgs e)
         {
             Close();
+
+            XDocument doc;
+            try
+            {
+                doc = XDocument.Load("settings.xml");
+            }
+            catch
+            {
+                doc = new XDocument();
+                doc.Add(new XElement("settings"));
+            }
+            XElement settings = doc.Element("settings");
+            XElement process = new XElement("process");
+            process.Add(new XElement("name", "123"),
+                       new XElement("priority", "high"),
+                       new XElement("affinity", "010"));
+            settings.Add(process);
+            doc.Save("settings.xml");
         }
     }
 }
