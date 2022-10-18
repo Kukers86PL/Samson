@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Samson
 {
@@ -23,6 +25,30 @@ namespace Samson
         {
             form2 = new Form2();
             form2.Show();
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                listView1.Items.Clear();
+                XDocument doc = XDocument.Load("settings.xml");
+                foreach (XElement xe in doc.Element("settings").Descendants("process"))
+                {
+                    string[] row = { xe.Element("name").Value, xe.Element("priority").Value, xe.Element("affinity").Value, "Initial" };
+                    var listViewItem = new ListViewItem(row);
+                    listView1.Items.Add(listViewItem);
+                }
+            }
+            catch
+            {
+                // nothing to do
+            }
         }
     }
 }
