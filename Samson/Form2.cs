@@ -46,8 +46,6 @@ namespace Samson
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Close();
-
             XDocument doc;
             try
             {
@@ -60,11 +58,30 @@ namespace Samson
             }
             XElement settings = doc.Element("settings");
             XElement process = new XElement("process");
-            process.Add(new XElement("name", "123"),
-                       new XElement("priority", "high"),
-                       new XElement("affinity", "010"));
+            process.Add(new XElement("name", textBox1.Text),
+                       new XElement("priority", comboBox1.Text),
+                       new XElement("affinity", get_affinity_string()));
             settings.Add(process);
             doc.Save("settings.xml");
+
+            Close();
+        }
+
+        private string get_affinity_string()
+        {
+            string ret = "";
+            for (int i = 0; i < checkedListBox1.Items.Count; ++i)
+            {
+                if (checkedListBox1.GetItemChecked(i))
+                {
+                    ret += "1";
+                }
+                else
+                {
+                    ret += "0";
+                }
+            }
+            return ret;
         }
     }
 }
