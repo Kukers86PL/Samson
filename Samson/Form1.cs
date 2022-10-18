@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -32,6 +34,12 @@ namespace Samson
             form2 = new Form2();
             form2.Show();
         }
+        public static string Reverse(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
+        }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
@@ -42,7 +50,6 @@ namespace Samson
             }
             else
             {
-
                 refreshSettings();
 
                 for (int i = 0; i < listView1.Items.Count; i++)
@@ -50,6 +57,44 @@ namespace Samson
                     string name = listView1.Items[i].SubItems[0].Text;
                     string priority = listView1.Items[i].SubItems[1].Text;
                     string affinity = listView1.Items[i].SubItems[2].Text;
+
+                    try
+                    {
+                        Process[] localByName = Process.GetProcessesByName(name);
+                        foreach (Process p in localByName)
+                        {
+                            switch (priority)
+                            {
+                                case "Realtime":
+                                    p.PriorityClass = ProcessPriorityClass.RealTime;
+                                    break;
+                                case "High":
+                                    p.PriorityClass = ProcessPriorityClass.High;
+                                    break;
+                                case "Above Normal":
+                                    p.PriorityClass = ProcessPriorityClass.AboveNormal;
+                                    break;
+                                case "Below normal":
+                                    p.PriorityClass = ProcessPriorityClass.BelowNormal;
+                                    break;
+                                case "Low":
+                                    p.PriorityClass = ProcessPriorityClass.Idle;
+                                    break;
+                                default:
+                                    p.PriorityClass = ProcessPriorityClass.Normal;
+                                    break;
+                            }
+
+                            p.ProcessorAffinity = (IntPtr)(Convert.ToInt32(Reverse(affinity), 2));
+                        }
+                        if (localByName.Length <= 0) throw new Exception();
+
+                        listView1.Items[i].SubItems[3].Text = "Set";
+                    }
+                    catch
+                    {
+                        listView1.Items[i].SubItems[3].Text = "Error";
+                    }
                 }
             }
         }
