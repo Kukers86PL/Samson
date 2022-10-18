@@ -86,10 +86,10 @@
             // 
             // deleteToolStripMenuItem
             // 
-            this.deleteToolStripMenuItem.Enabled = false;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Text = "Clear";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // columnHeader2
             // 

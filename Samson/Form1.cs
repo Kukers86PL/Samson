@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,12 +28,7 @@ namespace Samson
             form2.Show();
         }
 
-        private void Form1_Activated(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void Form1_Shown(object sender, EventArgs e)
+        private void refreshSettings()
         {
             try
             {
@@ -49,6 +45,22 @@ namespace Samson
             {
                 // nothing to do
             }
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            refreshSettings();
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            File.Delete("settings.xml");
+            refreshSettings();
         }
     }
 }
