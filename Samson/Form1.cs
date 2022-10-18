@@ -34,12 +34,6 @@ namespace Samson
             form2 = new Form2();
             form2.Show();
         }
-        public static string Reverse(string s)
-        {
-            char[] charArray = s.ToCharArray();
-            Array.Reverse(charArray);
-            return new string(charArray);
-        }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
@@ -57,6 +51,8 @@ namespace Samson
                     string name = listView1.Items[i].SubItems[0].Text;
                     string priority = listView1.Items[i].SubItems[1].Text;
                     string affinity = listView1.Items[i].SubItems[2].Text;
+
+                    listView1.Items[i].SubItems[3].Text = "Error";
 
                     try
                     {
@@ -85,15 +81,14 @@ namespace Samson
                                     break;
                             }
 
-                            p.ProcessorAffinity = (IntPtr)(Convert.ToInt32(Reverse(affinity), 2));
+                            p.ProcessorAffinity = (IntPtr)(Convert.ToInt32(affinity, 2));
+                            
+                            listView1.Items[i].SubItems[3].Text = "Set";
                         }
-                        if (localByName.Length <= 0) throw new Exception();
-
-                        listView1.Items[i].SubItems[3].Text = "Set";
                     }
                     catch
                     {
-                        listView1.Items[i].SubItems[3].Text = "Error";
+                        // nothing to do
                     }
                 }
             }

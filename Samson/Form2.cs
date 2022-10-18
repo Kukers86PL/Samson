@@ -23,7 +23,7 @@ namespace Samson
         private void Form2_Shown(object sender, EventArgs e)
         {
             checkedListBox1.Items.Clear();
-            for (int i = 0; i < Environment.ProcessorCount; ++i)
+            for (int i = (Environment.ProcessorCount - 1); i >= 0; --i)
             {
                 checkedListBox1.Items.Add("Processor " + i.ToString());
             }
