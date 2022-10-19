@@ -27,6 +27,7 @@ namespace Samson
         {
             InitializeComponent();
             SetTimer();
+            Hide();
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
@@ -137,6 +138,11 @@ namespace Samson
         {
             File.Delete("settings.xml");
             refreshSettings();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
         }
     }
 }
