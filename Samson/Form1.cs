@@ -173,5 +173,13 @@ namespace Samson
         {
             Process.Start("notepad.exe", @"settings.xml");
         }
+
+        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        {
+            WindowState = FormWindowState.Normal;
+            ShowInTaskbar = true;
+            notifyIcon1.Visible = false;
+            Show();
+        }
     }
 }
