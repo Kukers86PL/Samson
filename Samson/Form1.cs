@@ -168,5 +168,10 @@ namespace Samson
             notifyIcon1.Visible = false;
             Show();
         }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("notepad.exe", @"settings.xml");
+        }
     }
 }
