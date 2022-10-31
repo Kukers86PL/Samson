@@ -18,6 +18,7 @@ namespace Samson
         public Form2()
         {
             InitializeComponent();
+            comboBox1.SelectedItem = "Normal";
         }
 
         private void Form2_Shown(object sender, EventArgs e)
@@ -26,6 +27,10 @@ namespace Samson
             for (int i = (Environment.ProcessorCount - 1); i >= 0; --i)
             {
                 checkedListBox1.Items.Add("Processor " + i.ToString());
+            }
+            for (int i = 0; i < checkedListBox1.Items.Count; ++i)
+            {
+                checkedListBox1.SetItemChecked(i, true);
             }
         }
 

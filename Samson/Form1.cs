@@ -127,11 +127,16 @@ namespace Samson
         private void Form1_Activated(object sender, EventArgs e)
         {
             refreshSettings();
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            
+            WindowState = FormWindowState.Minimized;
+            notifyIcon1.Visible = true;
+            ShowInTaskbar = false;
+            Hide();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,6 +148,25 @@ namespace Samson
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
 
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == WindowState)
+            {
+                notifyIcon1.Visible = true;
+                notifyIcon1.ShowBalloonTip(500);
+                ShowInTaskbar = false;
+                Hide();
+            }
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Normal;
+            ShowInTaskbar = true;
+            notifyIcon1.Visible = false;
+            Show();
         }
     }
 }
